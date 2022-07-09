@@ -1,0 +1,45 @@
+<div class="department-edit">
+  <h1>{{title}}</h1>
+  <p *ngIf="this.id && !department"><em>Loading...</em></p>
+  <div class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">department name:</label>
+      <br />
+      <input type="text" id="name"
+             formControlName="name" required
+             placeholder="department name..."
+             class="form-control" />
+      <div *ngIf="form.get('name').invalid &&
+(form.get('name').dirty || form.get('name').touched)"
+           class="invalid-feedback">
+        <div *ngIf="form.get('name').errors?.required">
+          Name is required.
+        </div>
+        <div *ngIf="form.get('name').errors?.isDupeField">
+          Name already exists: please choose another.
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="form-group commands">
+      <button *ngIf="id" type="submit"
+              (click)="onSubmit()"
+              [disabled]="form.invalid"
+              class="btn btn-success">
+        Save
+      </button>
+      <button *ngIf="!id" type="submit"
+              (click)="onSubmit()"
+              [disabled]="form.invalid"
+              class="btn btn-success">
+        Create
+      </button>
+      <button type="button"
+              [routerLink]="['/departments']"
+              class="btn">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
